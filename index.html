@@ -10,8 +10,21 @@
   <div class="container">
     <h1>Check My Course</h1>
     <button class="btn" onclick="showMessage()">Explore Now</button>
-    <p id="message" class="hidden">Welcome! More features coming soon.</p>
+    <p id="message" class="hidden"></p>
   </div>
-  <script src="script.js"></script>
+  <script>
+    function showMessage() {
+      fetch('/api/hostname')
+        .then(res => res.text())
+        .then(hostname => {
+          document.getElementById("message").textContent = "Welcome to " + hostname;
+          document.getElementById("message").classList.remove("hidden");
+        })
+        .catch(err => {
+          document.getElementById("message").textContent = "Error fetching hostname";
+          document.getElementById("message").classList.remove("hidden");
+        });
+    }
+  </script>
 </body>
 </html>
